@@ -49,5 +49,5 @@ y_predict = x_data * val_w + val_b
 r2 = r2_score(y_data, y_predict)
 mae = mean_absolute_error(y_data, y_predict)
 print(r2, mae)
-
+# 0.9999951336870967 0.0053553938865661625
 
