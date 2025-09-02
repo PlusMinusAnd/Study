@@ -21,20 +21,22 @@ y = tf.compat.v1.placeholder(tf.float32, shape=[None, 1])
 
 w = tf.compat.v1.Variable(tf.random.normal([8,1]), dtype=tf.float32)
 b = tf.compat.v1.Variable(0, dtype=tf.float32)
+lr = tf.compat.v1.Variable(0.1, dtype=tf.float32)
 
 hypo = x @ w + b
 
 loss = tf.reduce_mean(tf.square(hypo - y))
-optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate=0.1)
+optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate=lr)
 train = optimizer.minimize(loss)
 
 epochs = 100000
 threshold = np.inf
 counts = 0
+reduce_counts = 0
 with tf.compat.v1.Session() as sess:
     sess.run(tf.compat.v1.global_variables_initializer())
     for step in range(epochs):
-        _, val_w, val_b = sess.run([train, w, b],
+        _, val_w, val_b= sess.run([train, w, b],
                      feed_dict ={
                          x:x_train, y:y_train
                      }
@@ -53,9 +55,14 @@ with tf.compat.v1.Session() as sess:
             
             best_rmse = val_rmse
             best_step = step +1
-            
         else :
             counts +=1
+            reduce_counts +=1
+            
+            if reduce_counts == 7 :
+                lr = lr * 0.5
+                print(f"Reduce Learning Rate {sess.run(lr)}")
+            
             if counts == 50:
                 print(f"\nEarly Stopping Triggered - {step+1} epochs")
                 print(f"Best Step {best_step} | RMSE {best_rmse}\t")
