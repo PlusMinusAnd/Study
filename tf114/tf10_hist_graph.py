@@ -57,9 +57,33 @@ print("="*10, " 그림그리기 ", "="*10)
 # plt.show()
 
 # w와 loss와의 관계
+# plt.plot(w_val_list, loss_val_list)
+# plt.xlabel('w')
+# plt.ylabel('loss')
+# plt.grid()
+# plt.show()
+
+plt.figure(figsize=(10,8))
+
+plt.subplot(2,2,1)
+plt.plot(loss_val_list)
+plt.xlabel('epoch')
+plt.ylabel('loss')
+plt.grid()
+
+plt.subplot(2,2,2)
+plt.plot(w_val_list)
+plt.xlabel('epoch')
+plt.ylabel('w')
+plt.grid()
+
+plt.subplot(2,1,2)
 plt.plot(w_val_list, loss_val_list)
 plt.xlabel('w')
 plt.ylabel('loss')
 plt.grid()
+
+plt.tight_layout()
 plt.show()
+
 
