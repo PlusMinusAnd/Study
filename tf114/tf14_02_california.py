@@ -33,6 +33,8 @@ epochs = 100000
 threshold = np.inf
 counts = 0
 reduce_counts = 0
+decay = tf.compat.v1.assign(lr, lr*0.5)
+
 with tf.compat.v1.Session() as sess:
     sess.run(tf.compat.v1.global_variables_initializer())
     for step in range(epochs):
@@ -59,11 +61,12 @@ with tf.compat.v1.Session() as sess:
             counts +=1
             reduce_counts +=1
             
-            if reduce_counts == 7 :
-                lr = lr * 0.5
+            if reduce_counts == 10 :
+                sess.run(decay)
                 print(f"Reduce Learning Rate {sess.run(lr)}")
+                reduce_counts = 0
             
-            if counts == 50:
+            if counts == 100:
                 print(f"\nEarly Stopping Triggered - {step+1} epochs")
                 print(f"Best Step {best_step} | RMSE {best_rmse}\t")
                 break
