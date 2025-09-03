@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
+tf.random.set_random_seed(5555)
 
 path = './backups/Study25/_data/kaggle/bank/'
 train_csv = pd.read_csv(path + 'train.csv', index_col=0)
@@ -66,7 +67,7 @@ with tf.compat.v1.Session() as sess:
         y_pred = np.round(y_prob)
         val_acc = accuracy_score(y_test.ravel(), y_pred.ravel())
         
-        if step % 100 ==0 :
+        if step % 50 ==0 :
             print(f"{step+1}\tEpochs | Loss {train_loss:.6f}\t| Val Loss {val_loss:.6f}\t| Val ACC {val_acc:.6f}")
             
         if val_loss < threshold :
@@ -83,5 +84,5 @@ with tf.compat.v1.Session() as sess:
                 break
 
 
-# Early Stopping Triggered - 295 epochs
-# Best Epochs 195 | Val Loss 88.573769    | Val ACC 0.788415
+# Early Stopping Triggered - 274 epochs
+# Best Epochs 174 | Val Loss 148.075668   | Val ACC 0.788415
