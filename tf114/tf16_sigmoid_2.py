@@ -29,6 +29,7 @@ acc = tf.reduce_mean(tf.cast(tf.equal(pred, y), dtype=tf.float32))
 epochs = 1000
 counts = 0
 threshold = np.inf
+
 with tf.compat.v1.Session() as sess :
     sess.run(tf.global_variables_initializer())
     for step in range(epochs) :
