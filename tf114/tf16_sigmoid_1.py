@@ -57,6 +57,4 @@ with tf.compat.v1.Session() as sess :
                 continue
         else :
             counts += 1
-        
-            
 
