@@ -44,6 +44,8 @@ with tf.compat.v1.Session() as sess :
         if val_loss < threshold :
             threshold = val_loss
             counts = 0
+        else :
+            counts += 1
             if counts==50:
                 best_w = val_w
                 best_b = val_b
@@ -55,6 +57,4 @@ with tf.compat.v1.Session() as sess :
                 break
             else :
                 continue
-        else :
-            counts += 1
 
