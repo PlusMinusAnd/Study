@@ -24,6 +24,8 @@ optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate=0.1)
 train = optimizer.minimize(loss)
 
 epochs = 1000
+counts = 0
+threshold = np.inf
 with tf.compat.v1.Session() as sess :
     sess.run(tf.global_variables_initializer())
     for step in range(epochs) :
@@ -32,10 +34,29 @@ with tf.compat.v1.Session() as sess :
                                        x:x_data, y:y_data
                                    }
                                    )
+        y_pred = expit(np.matmul(x_data, val_w) + val_b)
+        y_pred = np.round(y_pred)
+        acc = accuracy_score(y_data, y_pred)
+        
         if step%100==0 :
-            y_pred = expit(np.matmul(x_data, val_w) + val_b)
-            y_pred = np.round(y_pred)
-            acc = accuracy_score(y_data, y_pred)
             print(f"{step+1}\tepoch | Loss {val_loss:.6f}\t| Acc {acc:.6f}")
+        
+        if val_loss < threshold :
+            threshold = val_loss
+            counts = 0
+            if counts==50:
+                best_w = val_w
+                best_b = val_b
+                best_loss = val_loss
+                best_acc = acc
+                best_step = step+1
+                print(f"\nEarly Stopping Triggered - {step +1}")
+                print(f"{best_step}\tepoch | Loss {val_loss:.6f}\t| Acc {acc:.6f}")
+                break
+            else :
+                continue
+        else :
+            counts += 1
+        
             
 
