@@ -36,7 +36,7 @@ with tf.compat.v1.Session() as sess :
         _, val_acc, val_loss, val_w, val_b = sess.run([train, acc, loss, w, b],
                                    feed_dict ={
                                        x:x_data, y:y_data
-                                   }
+                                        }
                                    )
         
         if step%100==0 :
