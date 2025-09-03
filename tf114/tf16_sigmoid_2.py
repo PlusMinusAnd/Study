@@ -34,7 +34,7 @@ with tf.compat.v1.Session() as sess :
     sess.run(tf.global_variables_initializer())
     for step in range(epochs) :
         _, val_acc, val_loss, val_w, val_b = sess.run([train, acc, loss, w, b],
-                                   feed_dict ={
+                                    feed_dict ={
                                        x:x_data, y:y_data
                                         }
                                    )
