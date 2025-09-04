@@ -23,7 +23,7 @@ print(x.shape)  #(1459, 9)
 print(y.shape)  #(1459,)
 
 import random
-r = 7275 #random.randint(1,10000)     #7275, 208, 6544, 1850, 
+r = 7275 #random.randint(1,10000)     # 7275, 208, 6544, 1850, 
 
 x_train, x_test, y_train, y_test = train_test_split(
     x, y, train_size=0.8, shuffle=True, random_state=r
